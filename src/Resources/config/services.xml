@@ -44,12 +44,7 @@
             <argument type="service" id="maba_twig_template_modification.twig.lexer"/>
             <argument type="service" id="maba_twig_template_modification.twig.parser"/>
             <argument type="service" id="maba_twig_template_modification.node_replace_helper"/>
-            <argument type="collection">
-                <argument>%kernel.root_dir%/Resources/views</argument>
-                <argument>%kernel.root_dir%/Resources/views/**</argument>
-                <argument>%kernel.root_dir%/../src/{,*/,*/*/}*Bundle/Resources/views</argument>
-                <argument>%kernel.root_dir%/../src/{,*/,*/*/}*Bundle/Resources/views/**</argument>
-            </argument>
+            <argument>%maba_twig_template_modification.paths_to_process%</argument>
         </service>
     </services>
 </container>

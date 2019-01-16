@@ -20,9 +20,15 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('maba_twig_template_modification');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode->children()->arrayNode('paths_to_process')->defaultValue(
+            [
+                '%kernel.root_dir%/Resources/views',
+                '%kernel.root_dir%/Resources/views/**',
+                '%kernel.root_dir%/../src/{,*/,*/*/}*Bundle/Resources/views',
+                '%kernel.root_dir%/../src/{,*/,*/*/}*Bundle/Resources/views/**',
+
+            ]
+        )->prototype('scalar');
 
         return $treeBuilder;
     }

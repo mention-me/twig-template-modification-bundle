@@ -22,6 +22,8 @@ class MabaTwigTemplateModificationExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
+        $container->setParameter('maba_twig_template_modification.paths_to_process', $config['paths_to_process']);
+
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
