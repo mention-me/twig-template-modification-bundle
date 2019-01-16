@@ -3,15 +3,17 @@
 namespace Maba\Tests;
 
 use Composer\Autoload\ClassLoader;
-use Maba\Bundle\TwigTemplateModificationBundle\Service\NodeReplaceHelper;
-use Maba\Tests\Fixtures\ComplexNodeReplacer;
-use Maba\Tests\Fixtures\UppercaseNodeReplacer;
-use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Maba\Bundle\TwigTemplateModificationBundle\Factory\ReplacerFactory;
 use Maba\Bundle\TwigTemplateModificationBundle\Service\FilesReplacer;
+use Maba\Bundle\TwigTemplateModificationBundle\Service\NodeReplaceHelper;
+use Maba\Bundle\WebpackMigrationBundle\Service\AsseticNodeReplacer;
+use Maba\Tests\Fixtures\ComplexNodeReplacer;
+use Maba\Tests\Fixtures\JavascriptBlockReplacer;
+use Maba\Tests\Fixtures\UppercaseNodeReplacer;
+use SplFileInfo;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use SplFileInfo;
 
 class FunctionalTest extends KernelTestCase
 {
@@ -43,14 +45,21 @@ class FunctionalTest extends KernelTestCase
         $factory = $container->get('maba_twig_template_modification.factory.files_replacer');
         /** @var NodeReplaceHelper $nodeReplaceHelper */
         $nodeReplaceHelper = $container->get('maba_twig_template_modification.node_replace_helper');
-        $this->replacer = $factory->createFilesReplacer([
-            new UppercaseNodeReplacer(),
-            new ComplexNodeReplacer($nodeReplaceHelper),
-        ]);
+        $this->replacer = $factory->createFilesReplacer(
+            [
+                new UppercaseNodeReplacer(),
+                new ComplexNodeReplacer($nodeReplaceHelper),
+                new JavascriptBlockReplacer($nodeReplaceHelper),
+            ]
+        );
     }
     
     protected function tearDown()
     {
+        if ($this->getStatus() !== \PHPUnit_Runner_BaseTestRunner::STATUS_PASSED) {
+            return;
+        }
+
         $filesystem = new Filesystem();
         $filesystem->remove(__DIR__ . '/Fixtures/tmp');
     }

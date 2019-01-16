@@ -20,8 +20,15 @@ class Lexer extends BaseLexer
         }
 
         $cursor = $this->cursor;
+
+        // this is the opening twig tag as a string, e.g. "{%", "{%-", "{{" etc...
+        // we can use this to determine if we're in a whitespace ignoring block (if it ends with "-")
+        $rawOpeningTag = $this->positions[0][$this->position][0];
+
         if ($type === Token::BLOCK_START_TYPE || $type === Token::VAR_START_TYPE) {
-            $cursor -= 2;
+            // remove the correct number of characters based on the opening block, e.g. "{%" needs 2 characters removed
+            // but blocks like "{%-" need 3 characters removed otherwise the "{" remains in the template and breaks it
+            $cursor -= strlen($rawOpeningTag);
         }
 
         if ($this->lastToken !== null) {

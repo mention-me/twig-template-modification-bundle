@@ -2,12 +2,13 @@
 
 namespace Fixtures\Maba;
 
+use Fixtures\Maba\Bundle\TestBundle\TestBundle;
 use Maba\Bundle\TwigTemplateModificationBundle\MabaTwigTemplateModificationBundle;
-use Symfony\Component\HttpKernel\Kernel;
-use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Bundle\AsseticBundle\AsseticBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
-use Fixtures\Maba\Bundle\TestBundle\TestBundle;
+use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpKernel\Kernel;
 
 class TestKernel extends Kernel
 {
@@ -16,9 +17,11 @@ class TestKernel extends Kernel
         $bundles = array(
             new FrameworkBundle(),
             new TwigBundle(),
+            new AsseticBundle(),
             new MabaTwigTemplateModificationBundle(),
             new TestBundle(),
         );
+
         return $bundles;
     }
 

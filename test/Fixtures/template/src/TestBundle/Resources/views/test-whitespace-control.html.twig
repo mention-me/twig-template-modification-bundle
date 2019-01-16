@@ -1,0 +1,23 @@
+{# once with whitespace control #}
+{%- javascripts
+    '@TestBundle/Resources/assets/an-asset.js' -%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{%- endjavascripts -%}
+
+{# and once without whitespace control #}
+{% javascripts
+    '@TestBundle/Resources/assets/an-asset.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
+
+{# once with whitespace control #}
+{%- javascripts
+    '@TestBundle/Resources/assets/an-asset.js' -%}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{%- endjavascripts -%}
+
+{# and once without whitespace control #}
+{% javascripts
+    '@TestBundle/Resources/assets/an-asset.js' %}
+    <script type="text/javascript" src="{{ asset_url }}"></script>
+{% endjavascripts %}
